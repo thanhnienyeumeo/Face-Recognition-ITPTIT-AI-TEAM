@@ -1,19 +1,19 @@
 ### prepare for environment
 INSTALL CUDA AND CUDNN
 Using virtual environment if you can
-'''sh
+```sh
 git clone https://github.com/thanhnienyeumeo/Face-Recognition-ITPTIT-AI-TEAM.git
 pip install -r requirements.txt
-'''
+```
 if you can't run code on gpu:
-'''sh
+```sh
 pip uninstall onnxruntime-gpu
 pip install onnxruntime
-'''
-###Run faceRecognition.ipynb to test code before
+```
+### Run faceRecognition.ipynb to test code before
 
-###TRAINING
+### TRAINING
 Developing.....
 
-###TESTING
+### TESTING
 Developing......

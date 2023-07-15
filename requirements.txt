@@ -1,0 +1,10 @@
+insightface
+mxnet
+onnx
+onnxruntime-gpu==1.12
+numpy==1.23.5
+opencv-python
+scikit-learn
+tqdm
+Pillow
+scikit-image

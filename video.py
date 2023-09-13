@@ -92,7 +92,7 @@ def print_ID_results(img, evaluation_labels: np.ndarray, detector, app, nn, verb
           plot_one_box(boxs[i][:4], img, label = 'unknown')
     cv2.imshow('',img)
     t2 = time.time()
-    print(t2-t1)
+    #print(t2-t1)
 
 
 #app = FaceAnalysis(name="antelope")
@@ -121,8 +121,9 @@ def videoProcessing(use_camera, path, detector, app, labels, nn):
         # Kiểm tra xem frame có đọc thành công hay không
         if not ret:
             break
-        if cut_frame: continue
+        
         cut_frame = (cut_frame + 1) % ratio_cut_frame
+        if cut_frame: continue
         # Xử lý từng frame
         t1 = time.time()
         print_ID_results(frame, labels, detector=detector, app=app, nn=nn, verbose = True)
@@ -131,6 +132,7 @@ def videoProcessing(use_camera, path, detector, app, labels, nn):
         #print(max_delay)
         if cv2.waitKey(5) == ord(str('q')):
             break
+        print(1)
     # Giải phóng video và đóng cửa sổ hiển thị
     video_capture.release()
     cv2.destroyAllWindows()

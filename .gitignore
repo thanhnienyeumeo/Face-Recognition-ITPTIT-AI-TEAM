@@ -1,3 +1,5 @@
 *.ini
 Face Data
 __pycache__
+*.jpg
+*.MOV

@@ -1,7 +1,7 @@
 insightface
 mxnet
 onnx
-onnxruntime-gpu==1.12
+onnxruntime-gpu==1.9
 numpy==1.23.5
 opencv-python
 scikit-learn

@@ -3,3 +3,7 @@ Face Data
 __pycache__
 *.jpg
 *.MOV
+*.png
+testData
+LocalData/*
+Embeeding

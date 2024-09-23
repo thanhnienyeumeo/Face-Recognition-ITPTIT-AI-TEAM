@@ -17,7 +17,8 @@ import matplotlib.pyplot as plt
 
 
 
-model_name = 'buffalo_l'
+# model_name = 'buffalo_l'
+model_name = 'buffalo_sc'
 app = insightface.app.FaceAnalysis(model_name)
 assets_dir = os.path.expanduser('~/.insightface/models/buffalo_l')
 
@@ -86,9 +87,9 @@ def print_ID_results(img, evaluation_labels: np.ndarray, detector, app, nn, verb
       # check if any dist is greater than 0.5, and if so, print the results
       no_of_matching_faces = np.sum([1 if d <=0.6 else 0 for d in dists[0]])
       if no_of_matching_faces > 0:
-          print(dists[0][0])
+        #   print(dists[0][0])
           verbose = True
-          print(pred_labels[0], type(pred_labels[0]))
+        #   print(pred_labels[0], type(pred_labels[0]))
           if pred_labels[0] in name:
              plot_one_box(boxs[i][:4], img, label = name[pred_labels[0]])
           else:
@@ -177,11 +178,10 @@ embs, labels, probe_embs, probe_labels = load_embs()
 all_embs = np.concatenate((embs, probe_embs), axis=0)
 all_labels = np.concatenate((labels, probe_labels), axis=0)
 nn = NearestNeighbors(n_neighbors=1, metric="cosine")
-all_embs = np.load('Embeeding/embs.npy')
-all_labels = np.load('Embeeding/labels.npy')
+
 nn.fit(X=all_embs)
-path = 'testData\z5231335250816_89b0739b188ee9912dcd3a7519a89dd2.jpg'
-print_ID_results(resize_img(cv2.imread(path), 70), all_labels, detector, app, nn, verbose=True)
-# videoProcessing(False, 'img.MOV', detector, app, all_labels, nn) #Set use_camera = True to use camera, False to use video
+path = r'testData\z5231335250816_89b0739b188ee9912dcd3a7519a89dd2.jpg'
+# print_ID_results(resize_img(cv2.imread(path), 70), all_labels, detector, app, nn, verbose=True)
+videoProcessing(True, 'img.MOV', detector, app, all_labels, nn) #Set use_camera = True to use camera, False to use video
 
 cv2.waitKey(0)

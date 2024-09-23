@@ -12,7 +12,7 @@ import insightface
 
 
 class Handler():
-    def __init__(self, database_path, algorithm = 'knn', model_name = 'buffalo_l') -> None:
+    def __init__(self, database_path, algorithm = 'knn', model_name = 'buffalo_l', database_state = False) -> None:
         self.assets_dir = os.path.expanduser('~/.insightface/models/buffalo_l')
         self.arcface = insightface.app.FaceAnalysis(model_name)
         self.arcface = self.arc_model()
@@ -29,14 +29,17 @@ class Handler():
         self.image_size = (112, 112) # for arcface
         # True to use mean-feature verification, False for single-feature verification (take more time)
         self.verify_mode = False   
-        self.database_state = False
+        self.database_state = database_state
         self.database_path = database_path
         if algorithm == 'knn':
             self.algorithm = NearestNeighbors(n_neighbors=3, metric="cosine")
         else:
             self.algorithm = None
         # initialize database automatically
-        self.init_identity_database(database_path)
+        if self.database_state:
+            self.init_identity_database(database_path)
+        all_embs = np.load(self.embeeding_path + '/embs.npy')
+        self.algorithm.fit(X = all_embs)
         
     
     def arc_model(self):
@@ -77,7 +80,7 @@ class Handler():
        
         np.save(self.embeeding_path + '/embs.npy', all_embs)
         np.save(self.embeeding_path + '/labels.npy', all_labels)
-        self.algorithm.fit(X = all_embs)
+        
         # print(self.face_database)
         self.database_state = True
     
@@ -90,7 +93,8 @@ class Handler():
         t1 = time.time()
         if type(img) == str:
             img = cv2.imread(img)
-        if img.shape[0] > 2000 or img.shape[1] > 2000:
+        if img.shape[0] > 1000 or img.shape[1] > 2000:
+            print('Resizing image')
             img = resize_img(img, 50)
         boxs, kpss = self.detector.autodetect(img)
         for i in range(len(kpss)):
@@ -114,7 +118,7 @@ class Handler():
         #   for label, dist in zip(pred_labels, dists[0]):
         #     print(f"Nearest neighbours found in the database have labels {label} and is at a distance of {dist}")
             else:
-                plot_one_box(boxs[i][:4], img, label = 'unknown')
+                plot_one_box(boxs[i][:4], img, label = '')
         cv2.imshow('',img)
         t2 = time.time()
         

@@ -1,6 +1,6 @@
 from Handler import Handler
 
-handler = Handler('LocalData')
+handler = Handler('LocalData', database_state=True)
 import cv2
 import argparse
 

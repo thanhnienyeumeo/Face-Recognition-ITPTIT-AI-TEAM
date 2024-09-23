@@ -18,6 +18,8 @@ class ArcFaceONNX:
         find_sub = False
         find_mul = False
         model = onnx.load(self.model_file)
+        #note
+         # print('model:', model)
         graph = model.graph
         for nid, node in enumerate(graph.node[:8]):
             #print(nid, node.name)
